@@ -1,7 +1,9 @@
 ﻿using System;
-using Machine.Specifications;
+using System.Collections.Generic;
 using Moq;
 using Moq.AutoMock;
+using Training.DomainClasses;
+using Machine.Specifications;
 
 namespace Training.Specificaton
 {
@@ -28,4 +30,7 @@ namespace Training.Specificaton
         public static void ProvideAnImplementationOf<TInterface>(TInterface instance) =>
             container.Use<TInterface>(instance);
     }
+
+
+
 }
