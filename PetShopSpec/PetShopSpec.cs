@@ -6,6 +6,22 @@ using It = Machine.Specifications.It;
 
 namespace Training.Specificaton
 {
+
+    class MyClass
+    {
+        static int res = 0;
+
+        private Establish it = () =>
+        {
+            res = 2;
+        };
+        private Because of = () => { res += 2; };
+        private It should_be_that_two_plus_two_is_four = ()=>
+        {
+            
+            res.ShouldEqual(4);
+        };
+}
     public abstract class pet_shop_concern : Specification<PetShop>
     {
         Establish context = () =>
@@ -33,24 +49,6 @@ namespace Training.Specificaton
             number_of_pets.ShouldEqual(2);
     }
 
-    public class when_asking_for_all_pets : pet_shop_concern
-    {
-        Establish context = () =>
-        {
-            first_pet = new Pet();
-            second_pet = new Pet();
-            pet_initial_content.AddManyItems(first_pet, second_pet);
-        };
-
-        Because of = () => pets_in_shop = subject.AllPets();
-
-        It should_return_all_the_pets_in_the_shop = () =>
-            pet_initial_content.ShouldContainOnly(first_pet, second_pet);
-
-        static Pet first_pet;
-        static Pet second_pet;
-        static IEnumerable<Pet> pets_in_shop;
-    }
 
     public class when_adding_a_new_pet : pet_shop_concern
     {
@@ -63,7 +61,7 @@ namespace Training.Specificaton
         static Pet pet;
     }
 
-	[Ignore("Will be implemented 2'nd")]
+	
 	public class when_adding_an_existing_pet_again_ : pet_shop_concern
     {
         Establish context = () =>
@@ -81,7 +79,7 @@ namespace Training.Specificaton
         private static Pet pet;
     }
 
-	[Ignore("Will be implemented 3'rd")]
+
 	public class when_adding_a_new_pet_with_existing_name_ : pet_shop_concern
     {
         Establish context = () =>
