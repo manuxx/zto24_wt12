@@ -208,7 +208,6 @@ namespace Training.Specificaton
         };
     }
 
-    [Ignore("this will be implemented 2nd")]
     class when_sorting_pets : concern_with_pets_for_sorting_and_filtering
     {
         It should_be_able_to_sort_by_name_ascending = () =>
@@ -220,5 +219,4 @@ namespace Training.Specificaton
                 dog_Pluto, cat_Tom);
         };
     };
-
 }
