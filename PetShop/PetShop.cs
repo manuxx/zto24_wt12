@@ -30,11 +30,15 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllPetsSortedByName()
         {
-            // foreach (Pet pet in _petsInTheStore)
-            // {
-            //     
-            // }
-            return _petsInTheStore.OneAtATime().OrderBy(cat => cat.name);
+            var sortedPets = new List<Pet>(_petsInTheStore);
+            
+            // Sort is not a Linq its by default in enumerable
+            sortedPets.Sort((p1,p2) => p1.name.CompareTo(p2.name));
+            
+            return sortedPets;
+
+            // uses Linq, not allowed on labs
+            // return _petsInTheStore.OneAtATime().OrderBy(cat => cat.name);
         }
 
         public IEnumerable<Pet> AllCats()
