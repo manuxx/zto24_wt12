@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Training.DomainClasses
@@ -14,7 +13,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllPets()
         {
-            return _petsInTheStore.OneAtATime();
+            return new ReadOnlySet<Pet>(_petsInTheStore);
         }
 
         public void Add(Pet newPet)
