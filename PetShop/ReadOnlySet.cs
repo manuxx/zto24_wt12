@@ -1,24 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Training.DomainClasses;
-
-public class ReadOnlySet<TItem> : IEnumerable<TItem>
+namespace Training.DomainClasses
 {
-    private readonly IEnumerable<TItem> _pets;
-
-    public ReadOnlySet(IEnumerable<TItem> pets)
+    public class ReadOnlySet<TItem> : IEnumerable<TItem>
     {
-        _pets = pets;
-    }
+        private readonly IEnumerable<TItem> _pets;
 
-    public IEnumerator<TItem> GetEnumerator()
-    {
-        return _pets.GetEnumerator();
-    }
+        public ReadOnlySet(IEnumerable<TItem> pets)
+        {
+            _pets = pets;
+        }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
+        public IEnumerator<TItem> GetEnumerator()
+        {
+            return _pets.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }
