@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Training.DomainClasses
 {
@@ -25,6 +26,27 @@ namespace Training.DomainClasses
                 _petsInTheStore.Add(newPet);
 
             }
+        }
+
+        public IEnumerable<Pet> AllCats()
+        {
+            foreach (var pet in _petsInTheStore)
+            {
+                if (pet.species == Species.Cat)
+                    yield return pet;
+            }
+        }
+
+        public IEnumerable<Pet> AllPetsSortedByName()
+        {
+            var ret = new List<Pet>(_petsInTheStore);
+            ret.Sort(Cmp);
+            return ret;
+        }
+
+        private int Cmp(Pet pet1, Pet pet2)
+        {
+            return pet1.name.CompareTo(pet2.name);
         }
     }
 }
