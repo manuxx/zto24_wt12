@@ -3,11 +3,11 @@ using Training.DomainClasses;
 
 public static class EnumerableTools
 {
-    public static IEnumerable<Pet> AllItems(IEnumerable<Pet> pets)
+    public static IEnumerable<TItem> AllItems<TItem>(IEnumerable<TItem> items)
     {
-        foreach (var pet in pets)
+        foreach (var item in items)
         {
-            yield return pet;
+            yield return item;
         }
     }
 }
