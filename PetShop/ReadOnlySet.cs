@@ -10,13 +10,11 @@ namespace Training.DomainClasses
         public ReadOnlySet(IEnumerable<TItem> pets)
         {
             _pets = pets;
-            //throw new NotImplementedException();
         }
 
         public IEnumerator<TItem> GetEnumerator()
         {
             return _pets.GetEnumerator();
-            //throw new NotImplementedException();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
