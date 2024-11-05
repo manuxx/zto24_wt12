@@ -222,7 +222,6 @@ namespace Training.Specificaton
             var foundPets = subject.AllCatsOrDogs();
             foundPets.ShouldContainOnly(cat_Tom, cat_Jinx, dog_Huckelberry, dog_Lassie, dog_Pluto);
         };
-        [Ignore("Will be implemented next")]
         private It should_be_able_to_find_all_pets_but_not_mice = () =>
         {
             var foundPets = subject.AllPetsButNotMice();
