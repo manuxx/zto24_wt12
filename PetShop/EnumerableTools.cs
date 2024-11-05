@@ -12,7 +12,7 @@ public static class EnumerableTools
         }
     }
 
-    public static IEnumerable<Pet> AllThat(this IEnumerable<Pet> petsInTheStore, Func<Pet, bool> condition)
+    public static IEnumerable<T> AllThat<T>(this IEnumerable<T> petsInTheStore, Func<T, bool> condition)
     {
         foreach (var pet in petsInTheStore)
         {
