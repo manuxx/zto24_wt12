@@ -1,13 +1,18 @@
+using System;
 using System.Collections.Generic;
-using Training.DomainClasses;
 
-public static class EnumerableTools
+namespace Training.DomainClasses;
+
+public class EnumerableTools
 {
-    public static IEnumerable<TItem> OneAtATime<TItem>(this IEnumerable<TItem> items)
+    public static IEnumerable<Pet> AllThat(IList<Pet> petsInTheStore, Func<Pet, bool> condition)
     {
-        foreach (var item in items)
+        foreach (var pet in petsInTheStore)
         {
-            yield return item;
+            if (condition(pet))
+            {
+                yield return pet;
+            }
         }
     }
 }
