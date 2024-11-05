@@ -53,7 +53,10 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllFemalePets()
         {
-            throw new NotImplementedException();
+            foreach (Pet pet in _petsInTheStore)
+            {
+                if (pet.sex == Sex.Female) yield return pet;
+            }
         }
 
         public IEnumerable<Pet> AllCatsOrDogs()
