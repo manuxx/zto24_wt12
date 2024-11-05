@@ -26,27 +26,26 @@ namespace Training.DomainClasses
 
             }
         }
-
-        public IEnumerable<Pet> AllCats()
-        {
-            return _petsInTheStore.AllThat(pet => pet.species == Species.Cat);
-        }
-
         public IEnumerable<Pet> AllPetsSortedByName()
         {
             var ret = new List<Pet>(_petsInTheStore);
-            ret.Sort((p1,p2) => p1.name.CompareTo(p2.name));
+            ret.Sort((p1, p2) => p1.name.CompareTo(p2.name));
             return ret;
+        }
+
+        public IEnumerable<Pet> AllCats()
+        {
+            return _petsInTheStore.AllThat(IsASpecies(Species.Cat));
         }
 
         public IEnumerable<Pet> AllMice()
         {
-            return _petsInTheStore.AllThat(pet => pet.species == Species.Mouse);
+            return _petsInTheStore.AllThat(IsASpecies(Species.Mouse));
         }
 
         public IEnumerable<Pet> AllFemalePets()
         {
-            return _petsInTheStore.AllThat(pet => pet.sex == Sex.Female);
+            return _petsInTheStore.AllThat(IsFemale);
         }
 
         public IEnumerable<Pet> AllCatsOrDogs()
@@ -61,7 +60,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllPetsBornAfter2010()
         {
-            return _petsInTheStore.AllThat(pet => pet.yearOfBirth > 2010);
+            return _petsInTheStore.AllThat(IsBornAfter(2010));
         }
 
         public IEnumerable<Pet> AllDogsBornAfter2010()
@@ -77,6 +76,20 @@ namespace Training.DomainClasses
         public IEnumerable<Pet> AllPetsBornAfter2011OrRabbits()
         {
             return _petsInTheStore.AllThat(pet => pet.yearOfBirth > 2011 || pet.species == Species.Rabbit);
+        }
+
+
+        private static Func<Pet, bool> IsASpecies(Species species)
+        {
+            return pet => pet.species == species;
+        }
+        private bool IsFemale(Pet pet)
+        {
+            return pet.sex == Sex.Female;
+        }
+        private static Func<Pet, bool> IsBornAfter(int year)
+        {
+            return pet => pet.yearOfBirth > year;
         }
     }
 }
