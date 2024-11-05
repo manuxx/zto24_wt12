@@ -6,7 +6,13 @@ namespace Training.DomainClasses
     public class PetShop
     {
         private IList<Pet> _petsInTheStore;
-
+        private IEnumerable<Pet> AllThat(Func<Pet, bool> condition)
+        {
+            foreach (Pet pet in _petsInTheStore)
+            {
+                if (condition(pet)) yield return pet;
+            }
+        }
         public PetShop(IList<Pet> petsInTheStore)
         {
             this._petsInTheStore = petsInTheStore;
@@ -29,11 +35,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCats()
         {
-            foreach (Pet pet in _petsInTheStore)
-            {
-                if(pet.species==Species.Cat)
-                    yield return pet;
-            }
+            return AllThat(pet => pet.species == Species.Cat);
         }
 
         public IEnumerable<Pet> AllPetsSortedByName()
@@ -42,25 +44,15 @@ namespace Training.DomainClasses
             ret.Sort((p1,p2) => p1.name.CompareTo(p2.name));
             return ret;
         }
-        private IEnumerable<Pet> AllThat(Func<Pet, bool> condition)
-        {
-            foreach (Pet pet in _petsInTheStore)
-            {
-                if (condition(pet)) yield return pet;
-            }
-        }
 
         public IEnumerable<Pet> AllMice()
         {
-            foreach (Pet pet in _petsInTheStore)
-            {
-                if (pet.species == Species.Mouse) yield return pet;
-            }
+            return AllThat(pet => pet.species == Species.Mouse);
         }
 
         public IEnumerable<Pet> AllFemalePets()
         {
-            foreach (var pet1 in AllThat(pet => pet.sex == Sex.Female)) yield return pet1;
+            return AllThat(pet => pet.sex == Sex.Female);
         }
 
         public IEnumerable<Pet> AllCatsOrDogs()
