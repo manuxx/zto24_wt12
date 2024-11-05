@@ -12,9 +12,9 @@ public static class EnumerableTools
         }
     }
 
-    public static IEnumerable<Pet> AllThat(this IEnumerable<Pet> petsInTheStore, Func<Pet, bool> condition)
+    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> petsInTheStore, Func<TItem, bool> condition)
     {
-        foreach (Pet pet in petsInTheStore)
+        foreach (TItem pet in petsInTheStore)
         {
             if (condition(pet))
                 yield return pet;
