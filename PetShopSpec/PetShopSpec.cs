@@ -237,7 +237,6 @@ namespace Training.Specificaton
             var foundPets = subject.AllDogsBornAfter2010();
             foundPets.ShouldContainOnly(dog_Pluto);
         };
-        [Ignore("Will be implemented next")]
         private It should_be_able_to_find_all_male_dogs = () =>
         {
             var foundPets = subject.AllMaleDogs();
