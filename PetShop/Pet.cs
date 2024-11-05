@@ -39,5 +39,20 @@ namespace Training.DomainClasses
         public int yearOfBirth { get; set; }
         public float price { get; set; }
         public Species species { get; set; }
+
+        public static Func<Pet, bool> IsASpecies(Species species)
+        {
+            return pet => pet.species == species;
+        }
+
+        public static Func<Pet, bool> IsBornAfter(int year)
+        {
+            return pet => pet.yearOfBirth > year;
+        }
+
+        public static bool IsFemale(Pet pet)
+        {
+            return pet.sex == Sex.Female;
+        }
     }
 }
