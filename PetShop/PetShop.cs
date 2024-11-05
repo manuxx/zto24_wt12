@@ -29,18 +29,65 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCats()
         {
-            foreach (Pet pet in _petsInTheStore)
-            {
-                if(pet.species==Species.Cat)
-                    yield return pet;
-            }
+            return AllThat(pet => pet.species==Species.Cat);
         }
+
+        
 
         public IEnumerable<Pet> AllPetsSortedByName()
         {
             var ret = new List<Pet>(_petsInTheStore);
             ret.Sort((p1,p2) => p1.name.CompareTo(p2.name));
             return ret;
+        }
+
+        public IEnumerable<Pet> AllMice()
+        {
+            return AllThat(pet => pet.species == Species.Mouse);
+        }
+
+        public IEnumerable<Pet> AllCatsOrDogs()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Pet> AllFemalePets()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Pet> AllPetsButNotMice()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Pet> AllPetsBornAfter2010()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Pet> AllDogsBornAfter2010()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Pet> AllMaleDogs()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Pet> AllPetsBornAfter2011OrRabbits()
+        {
+            throw new NotImplementedException();
+        }
+
+        private IEnumerable<Pet> AllThat(Func<Pet, bool> condition)
+        {
+            foreach (Pet pet in _petsInTheStore)
+            {
+                if (condition(pet))
+                    yield return pet;
+            }
         }
     }
 }
