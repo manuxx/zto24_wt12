@@ -29,16 +29,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCats()
         {
-            return AllThat(pet => pet.species==Species.Cat);
-        }
-
-        private IEnumerable<Pet> AllThat(Func<Pet, bool> condition)
-        {
-            foreach (Pet pet in _petsInTheStore)
-            {
-                if(condition(pet))
-                    yield return pet;
-            }
+            return _petsInTheStore.AllThat((pet => pet.species==Species.Cat));
         }
 
         public IEnumerable<Pet> AllPetsSortedByName()
@@ -50,42 +41,42 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllMice()
         {
-            return AllThat(p => p.species == Species.Mouse);
+            return _petsInTheStore.AllThat((p => p.species == Species.Mouse));
         }
 
         public IEnumerable<Pet> AllFemalePets()
         {
-            return AllThat(p => p.sex == Sex.Female);
+            return _petsInTheStore.AllThat((p => p.sex == Sex.Female));
         }
 
         public IEnumerable<Pet> AllCatsOrDogs()
         {
-            return AllThat(p => p.species == Species.Cat || p.species == Species.Dog);
+            return _petsInTheStore.AllThat((p => p.species == Species.Cat || p.species == Species.Dog));
         }
 
         public IEnumerable<Pet> AllPetsButNotMice()
         {
-            return AllThat(p => p.species != Species.Mouse);
+            return _petsInTheStore.AllThat((p => p.species != Species.Mouse));
         }
 
         public IEnumerable<Pet> AllPetsBornAfter2010()
         {
-            return AllThat(p => p.yearOfBirth > 2010);
+            return _petsInTheStore.AllThat((p => p.yearOfBirth > 2010));
         }
 
         public IEnumerable<Pet> AllDogsBornAfter2010()
         {
-            return AllThat(p => p.yearOfBirth > 2010 && p.species == Species.Dog);
+            return _petsInTheStore.AllThat((p => p.yearOfBirth > 2010 && p.species == Species.Dog));
         }
 
         public IEnumerable<Pet> AllMaleDogs()
         {
-            return AllThat(p => p.sex == Sex.Male && p.species == Species.Dog);
+            return _petsInTheStore.AllThat((p => p.sex == Sex.Male && p.species == Species.Dog));
         }
 
         public IEnumerable<Pet> AllPetsBornAfter2011OrRabbits()
         {
-            return AllThat(p => p.yearOfBirth > 2011 || p.species == Species.Rabbit);
+            return _petsInTheStore.AllThat((p => p.yearOfBirth > 2011 || p.species == Species.Rabbit));
         }
     }
 }
