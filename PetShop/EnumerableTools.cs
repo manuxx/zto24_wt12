@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PetShop;
 using Training.DomainClasses;
 
 public static class EnumerableTools
@@ -12,11 +13,16 @@ public static class EnumerableTools
         }
     }
 
-    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, Predicate<TItem> meetsCondition)
+    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, Predicate<TItem>[] condition)
+    {
+        return items.AllThat(new AnonymousCriteria<TItem>(condition));
+    }
+
+    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, ICriteria<TItem> criteria)
     {
         foreach (var item in items)
         {
-            if (meetsCondition(item))
+            if (criteria.IsSatisfiedBy(item))
             {
                 yield return item;
             }
