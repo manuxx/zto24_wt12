@@ -189,10 +189,11 @@ namespace Training.Specificaton
                                              mouse_Jerry);
         };
 
+
+        protected static Pet cat_Jinx;
         protected static Pet mouse_Dixie;
         protected static Pet mouse_Jerry;
         protected static Pet rabbit_Fluffy;
-        protected static Pet cat_Jinx;
         protected static Pet cat_Tom;
         protected static Pet dog_Huckelberry;
         protected static Pet dog_Lassie;
@@ -206,6 +207,54 @@ namespace Training.Specificaton
             var foundPets = subject.AllCats();
             foundPets.ShouldContainOnly(cat_Tom, cat_Jinx);
         };
+        private It should_be_able_to_find_all_mice = () =>
+        {
+            var foundPets = subject.AllMice();
+            foundPets.ShouldContainOnly(mouse_Dixie, mouse_Jerry);
+        };
+        [Ignore("Will be implemented next")]
+        private It should_be_able_to_find_all_female_pets = () =>
+        {
+            var foundPets = subject.AllFemalePets();
+            foundPets.ShouldContainOnly(dog_Lassie, mouse_Dixie);
+        };
+        [Ignore("Will be implemented next")]
+        private It should_be_able_to_find_all_cats_or_dogs = () =>
+        {
+            var foundPets = subject.AllCatsOrDogs();
+            foundPets.ShouldContainOnly(cat_Tom, cat_Jinx, dog_Huckelberry, dog_Lassie, dog_Pluto);
+        };
+        [Ignore("Will be implemented next")]
+        private It should_be_able_to_find_all_pets_but_not_mice = () =>
+        {
+            var foundPets = subject.AllPetsButNotMice();
+            foundPets.ShouldContainOnly(cat_Tom, cat_Jinx, dog_Huckelberry, dog_Lassie, dog_Pluto, rabbit_Fluffy);
+        };
+        [Ignore("Will be implemented next")]
+        private It should_be_able_to_find_all_pets_born_after_2010 = () =>
+        {
+            var foundPets = subject.AllPetsBornAfter2010();
+            foundPets.ShouldContainOnly(dog_Pluto, rabbit_Fluffy, mouse_Dixie, mouse_Jerry);
+        };
+        [Ignore("Will be implemented next")]
+        private It should_be_able_to_find_all_young_dogs = () =>
+        {
+            var foundPets = subject.AllDogsBornAfter2010();
+            foundPets.ShouldContainOnly(dog_Pluto);
+        };
+        [Ignore("Will be implemented next")]
+        private It should_be_able_to_find_all_male_dogs = () =>
+        {
+            var foundPets = subject.AllMaleDogs();
+            foundPets.ShouldContainOnly(dog_Huckelberry, dog_Pluto);
+        };
+        [Ignore("Will be implemented next")]
+        private It should_be_able_to_find_all_young_pets_or_rabbits = () =>
+        {
+            var foundPets = subject.AllPetsBornAfter2011OrRabbits();
+            foundPets.ShouldContainOnly(mouse_Jerry, rabbit_Fluffy);
+        };
+
     }
 
 
@@ -214,7 +263,6 @@ namespace Training.Specificaton
         It should_be_able_to_sort_by_name_ascending = () =>
         {
             var result = subject.AllPetsSortedByName();
-
             result.ShouldContainOnlyInOrder(mouse_Dixie, rabbit_Fluffy, dog_Huckelberry, mouse_Jerry, cat_Jinx,
                 dog_Lassie,
                 dog_Pluto, cat_Tom);
