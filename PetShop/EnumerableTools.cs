@@ -19,7 +19,7 @@ public static class EnumerableTools
 	    return petsInTheStore.AllThat(new AnonymousCriteria<Pet>(condition));
     }
 
-    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> petsInTheStore, Criteria<Pet> criteria)
+    public static IEnumerable<Pet> AllThat(this IEnumerable<Pet> petsInTheStore, Criteria<Pet> criteria)
     {
 		foreach (var pet in petsInTheStore)
 		{
