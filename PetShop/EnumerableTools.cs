@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Training.DomainClasses;
 
-public class EnumerableTools
+public static class EnumerableTools
 {
-    public static IEnumerable<Pet> AllThat(IList<Pet> petsInTheStore, Func<Pet, bool> condition)
+    public static IEnumerable<Pet> AllThat(this IList<Pet> petsInTheStore, Func<Pet, bool> condition)
     {
         foreach (var pet in petsInTheStore)
         {
