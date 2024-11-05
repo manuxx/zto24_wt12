@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Training.DomainClasses;
 
@@ -9,5 +10,14 @@ public static class EnumerableTools
         {
             yield return item;
         }
+    }
+
+    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> petsInTheStore, Func<TItem, bool> condition)
+    {
+	    foreach (TItem pet in petsInTheStore)
+	    {
+		    if (condition(pet))
+			    yield return pet;
+	    }
     }
 }
