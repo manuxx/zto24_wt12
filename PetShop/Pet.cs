@@ -40,21 +40,21 @@ namespace Training.DomainClasses
         public float price { get; set; }
         public Species species { get; set; }
 
-        public static Func<Pet, bool> IsSpeciesOf(Species species)
+        public static Predicate<Pet> IsSpeciesOf(Species species)
         {
             return (pet => pet.species == species);
         }
 
-        public static Func<Pet, bool> IsAFemale()
+        public static Predicate<Pet> IsAFemale()
         {
             return (p => p.sex == Sex.Female);
         }
-        public static Func<Pet, bool> IsAMale()
+        public static Predicate<Pet> IsAMale()
         {
             return (p => p.sex == Sex.Male);
         }
 
-        public static Func<Pet, bool> IsBornAfter(int year)
+        public static Predicate<Pet> IsBornAfter(int year)
         {
             return p => p.yearOfBirth > year;
         }
