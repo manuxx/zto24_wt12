@@ -20,4 +20,12 @@ public static class EnumerableTools
                 yield return pet;
         }
     }
+    public static IEnumerable<Pet> AllThat<Pet>(this IEnumerable<Pet> petsInTheStore, Criteria<Pet> criteria)
+    {
+        foreach (Pet pet in petsInTheStore)
+        {
+            if (criteria.IsSatisfiedBy(pet))
+                yield return pet;
+        }
+    }
 }
