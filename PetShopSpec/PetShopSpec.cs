@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Training.DomainClasses;
 using Machine.Specifications;
 using It = Machine.Specifications.It;
@@ -204,7 +205,8 @@ namespace Training.Specificaton
     {
         private It should_be_able_to_find_all_cats = () =>
         {
-            var foundPets = subject.AllCats();
+            ICriteria<Pet> criteria = Where_Pet.HasAn(pet => pet.species).EqualTo(Species.Cat);
+            var foundPets = subject.AllPets().AllThat(criteria);
             foundPets.ShouldContainOnly(cat_Tom, cat_Jinx);
         };
         private It should_be_able_to_find_all_mice = () =>
@@ -250,6 +252,29 @@ namespace Training.Specificaton
             foundPets.ShouldContainOnly(mouse_Jerry, rabbit_Fluffy);
         };
 
+    }
+
+    public class Where_Pet
+    {
+        public static CriteriaBuilder HasAn(Func<Pet, Species> propertySelector)
+        {
+            return new CriteriaBuilder(propertySelector);
+        }
+    }
+
+    public class CriteriaBuilder
+    {
+        private readonly Func<Pet, Species> _propertySelector;
+
+        public CriteriaBuilder(Func<Pet, Species> propertySelector)
+        {
+            _propertySelector = propertySelector;
+        }
+
+        public ICriteria<Pet> EqualTo(Species species)
+        {
+            return new AnonymousCriteria<Pet>(pet => _propertySelector(pet) == species);
+        }
     }
 
 
