@@ -12,21 +12,21 @@ public static class EnumerableTools
         }
     }
 
-    public static IEnumerable<Pet> AllThat<Pet>(this IEnumerable<Pet> petsInTheStore, Predicate<Pet> condition)
+    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, Predicate<TItem> condition)
     {
-        return petsInTheStore.AllThat(new AnonymousCriteria<Pet>(condition));
+        return items.AllThat(new AnonymousCriteria<TItem>(condition));
     }
-    public static IEnumerable<Pet> AllThat<Pet>(this IEnumerable<Pet> petsInTheStore, Criteria<Pet> criteria)
+    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, ICriteria<TItem> criteria)
     {
-        foreach (Pet pet in petsInTheStore)
+        foreach (TItem item in items)
         {
-            if (criteria.IsSatisfiedBy(pet))
-                yield return pet;
+            if (criteria.IsSatisfiedBy(item))
+                yield return item;
         }
     }
 }
 
-public class AnonymousCriteria<T> : Criteria<T>
+public class AnonymousCriteria<T> : ICriteria<T>
 {
     private readonly Predicate<T> _condition;
 
@@ -35,13 +35,13 @@ public class AnonymousCriteria<T> : Criteria<T>
         _condition = condition;
     }
 
-    public bool IsSatisfiedBy(T pet)
+    public bool IsSatisfiedBy(T item)
     {
-        return _condition(pet);
+        return _condition(item);
     }
 }
 
-public interface Criteria<T>
+public interface ICriteria<T>
 {
     bool IsSatisfiedBy(T pet);
 }
