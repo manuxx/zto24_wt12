@@ -29,7 +29,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCats()
         {
-            return _petsInTheStore.AllThat(pet => pet.species == Species.Cat);
+	        return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Cat));
         }
 
         public IEnumerable<Pet> AllPetsSortedByName()
@@ -46,17 +46,17 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllFemalePets()
         {
-            return _petsInTheStore.AllThat(Pet.IsFemale());
+	        return _petsInTheStore.AllThat(Pet.IsSex(Sex.Female));
         }
 
         public IEnumerable<Pet> AllCatsOrDogs()
         {
-            return _petsInTheStore.AllThat(pet => pet.species == Species.Cat || pet.species == Species.Dog);
+            return _petsInTheStore.AllThat(new Alternative(Pet.IsSpeciesOf(Species.Cat), Pet.IsSpeciesOf(Species.Dog)));
         }
 
         public IEnumerable<Pet> AllPetsButNotMice()
         {
-            return _petsInTheStore.AllThat(pet => pet.species != Species.Mouse);
+	        return _petsInTheStore.AllThat(new Negation(Pet.IsSpeciesOf(Species.Mouse)));
         }
 
         public IEnumerable<Pet> AllPetsBornAfter2010()
@@ -66,17 +66,17 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllDogsBornAfter2010()
         {
-            return _petsInTheStore.AllThat(pet => pet.species == Species.Dog && pet.yearOfBirth > 2010);
+	        return _petsInTheStore.AllThat(new Conjunction(Pet.IsSpeciesOf(Species.Dog), Pet.IsBornAfter(2010)));
         }
 
         public IEnumerable<Pet> AllMaleDogs()
         {
-            return _petsInTheStore.AllThat(pet => pet.species == Species.Dog && pet.sex == Sex.Male);
-        }
+            return _petsInTheStore.AllThat(new Conjunction(Pet.IsSex(Sex.Male), Pet.IsSpeciesOf(Species.Dog)));
+		}
 
         public IEnumerable<Pet> AllPetsBornAfter2011OrRabbits()
         {
-            return _petsInTheStore.AllThat(pet => pet.species == Species.Rabbit || pet.yearOfBirth > 2011);
-        }
+			return _petsInTheStore.AllThat(new Alternative(Pet.IsSpeciesOf(Species.Rabbit), Pet.IsBornAfter(2011)));
+		}
     }
 }
