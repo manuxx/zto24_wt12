@@ -52,13 +52,13 @@ namespace Training.Specificaton
 
     public class when_adding_a_new_pet : pet_shop_concern
     {
-        Establish context = () => pet = new Pet();
-        Because of = () => subject.Add(pet);
+        Establish context = () => _item = new Pet();
+        Because of = () => subject.Add(_item);
 
         It should_store_a_new_pet_in_the_shop = () =>
-            subject.AllPets().ShouldContain(pet);
+            subject.AllPets().ShouldContain(_item);
 
-        static Pet pet;
+        static Pet _item;
     }
 
 	
@@ -66,17 +66,17 @@ namespace Training.Specificaton
     {
         Establish context = () =>
         {
-            pet = new Pet();
-            pet_initial_content.Add(pet);
+            _item = new Pet();
+            pet_initial_content.Add(_item);
         };
 
         Because of = () =>
-            subject.Add(pet);
+            subject.Add(_item);
 
         It should_store_a_pet_in_the_shop_once = () =>
             subject.AllPets().CountItems().ShouldEqual(1);
 
-        private static Pet pet;
+        private static Pet _item;
     }
 
 

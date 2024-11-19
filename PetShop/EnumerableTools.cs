@@ -11,11 +11,6 @@ public static class EnumerableTools
             yield return item;
         }
     }
-
-    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, Predicate<TItem> condition)
-    {
-        return items.AllThat(new AnonymousCriteria<TItem>(condition));
-    }
     public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, ICriteria<TItem> criteria)
     {
         foreach (TItem item in items)
@@ -24,24 +19,4 @@ public static class EnumerableTools
                 yield return item;
         }
     }
-}
-
-public class AnonymousCriteria<T> : ICriteria<T>
-{
-    private readonly Predicate<T> _condition;
-
-    public AnonymousCriteria(Predicate<T> condition)
-    {
-        _condition = condition;
-    }
-
-    public bool IsSatisfiedBy(T item)
-    {
-        return _condition(item);
-    }
-}
-
-public interface ICriteria<T>
-{
-    bool IsSatisfiedBy(T pet);
 }
