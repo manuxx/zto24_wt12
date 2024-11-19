@@ -35,13 +35,13 @@ public class AnonymousCriteria<T> : Criteria<T>
         _condition = condition;
     }
 
-    public bool IsSatisfiedBy(T pet)
+    public bool IsSatisfiedBy(T item)
     {
-        return _condition(pet);
+        return _condition(item);
     }
 }
 
 public interface Criteria<T>
 {
-    bool IsSatisfiedBy(T pet);
+    bool IsSatisfiedBy(T item);
 }

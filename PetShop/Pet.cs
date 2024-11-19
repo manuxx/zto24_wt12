@@ -63,9 +63,9 @@ namespace Training.DomainClasses
                 _year = year;
             }
 
-            public bool IsSatisfiedBy(Pet pet)
+            public bool IsSatisfiedBy(Pet item)
             {
-                return pet.yearOfBirth > _year;
+                return item.yearOfBirth > _year;
             }
         }
 
@@ -78,9 +78,9 @@ namespace Training.DomainClasses
                 _sex = sex;
             }
 
-            public bool IsSatisfiedBy(Pet pet)
+            public bool IsSatisfiedBy(Pet item)
             {
-                return pet.sex == _sex;
+                return item.sex == _sex;
             }
         }
 
@@ -93,9 +93,9 @@ namespace Training.DomainClasses
                 _species = species;
             }
 
-            public bool IsSatisfiedBy(Pet pet)
+            public bool IsSatisfiedBy(Pet item)
             {
-                return pet.species == _species;
+                return item.species == _species;
             }
         }
     }
