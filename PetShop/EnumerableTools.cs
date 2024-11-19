@@ -28,18 +28,20 @@ public static class EnumerableTools
 
 public class AnonymousCriteria<T> : Criteria<T>
 {
+    private readonly Predicate<T> _condition;
+
     public AnonymousCriteria(Predicate<T> condition)
     {
-        throw new NotImplementedException();
+        _condition = condition;
     }
 
-    public bool IsSatisfiedBy<T1>(T1 pet)
+    public bool IsSatisfiedBy(T pet)
     {
-        throw new NotImplementedException();
+        return _condition(pet);
     }
 }
 
 public interface Criteria<T>
 {
-    bool IsSatisfiedBy<T>(T pet);
+    bool IsSatisfiedBy(T pet);
 }
