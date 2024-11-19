@@ -1,47 +1,14 @@
-using System;
 using System.Collections.Generic;
 using Training.DomainClasses;
 
 public static class EnumerableTools
 {
-    public static IEnumerable<TItem> OneAtATime<TItem>(this IEnumerable<TItem> items)
+	public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, Criteria<TItem> criteria)
     {
-        foreach (var item in items)
-        {
-            yield return item;
-        }
-    }
-
-    public static IEnumerable<Pet> AllThat<Pet>(this IEnumerable<Pet> petsInTheStore, Predicate<Pet> condition)
-    {
-        return petsInTheStore.AllThat(new AnonymousCriteria<Pet>(condition));
-    }
-    public static IEnumerable<Pet> AllThat<Pet>(this IEnumerable<Pet> petsInTheStore, Criteria<Pet> criteria)
-    {
-        foreach (Pet pet in petsInTheStore)
+        foreach (TItem pet in items)
         {
             if (criteria.IsSatisfiedBy(pet))
                 yield return pet;
         }
     }
-}
-
-public class AnonymousCriteria<T> : Criteria<T>
-{
-    private readonly Predicate<T> _condition;
-
-    public AnonymousCriteria(Predicate<T> condition)
-    {
-        _condition = condition;
-    }
-
-    public bool IsSatisfiedBy(T pet)
-    {
-        return _condition(pet);
-    }
-}
-
-public interface Criteria<T>
-{
-    bool IsSatisfiedBy(T pet);
 }
