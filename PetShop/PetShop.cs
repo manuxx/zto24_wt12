@@ -54,6 +54,11 @@ namespace Training.DomainClasses
             return _petsInTheStore.AllThat(new Alternative(Pet.IsSpeciesOf(Species.Cat), Pet.IsSpeciesOf(Species.Dog)));
         }
 
+        public static Alternative Or(Criteria<Pet> criteria1, Criteria<Pet> criteria2)
+        {
+	        return new Alternative(Pet.IsSpeciesOf(Species.Cat), Pet.IsSpeciesOf(Species.Dog));
+        }
+
         public IEnumerable<Pet> AllPetsButNotMice()
         {
 	        return _petsInTheStore.AllThat(new Negation(Pet.IsSpeciesOf(Species.Mouse)));

@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace Training.DomainClasses;
 
 public class Conjunction : Criteria<Pet>
