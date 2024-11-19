@@ -204,6 +204,8 @@ namespace Training.Specificaton
     {
         private It should_be_able_to_find_all_cats = () =>
         {
+	        Criteria<Pet> criteria = Where_Pet.HasAn(pet => pet.species)
+		        .EqualTo(Species.Cat);
             var foundPets = subject.AllCats();
             foundPets.ShouldContainOnly(cat_Tom, cat_Jinx);
         };
@@ -252,6 +254,28 @@ namespace Training.Specificaton
 
     }
 
+    internal class Where_Pet
+    {
+	    public static CriteriaBuilder HasAn(Func<Pet, Species> func)
+	    {
+		    return new CriteriaBuilder(func);
+	    }
+    }
+
+    internal class CriteriaBuilder
+    {
+	    private Func<Pet, Species> _func;
+
+	    public CriteriaBuilder(Func<Pet, Species> func)
+	    {
+		    _func = func;
+	    }
+
+	    public Criteria<Pet> EqualTo(Species species)
+	    {
+		    return new AnonymousCriteria<Pet>(pet => _func(pet) == species);
+	    }
+    }
 
     class when_sorting_pets : concern_with_pets_for_sorting_and_filtering
     {
