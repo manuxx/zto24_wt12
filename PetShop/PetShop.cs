@@ -52,12 +52,12 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCatsOrDogs()
         {
-            return _petsInTheStore.AllThat((pet => pet.species == Species.Cat || pet.species == Species.Dog));
+            return _petsInTheStore.AllThat(new Alternative<Pet>(Pet.IsSpeciesOf(Species.Cat),Pet.IsSpeciesOf(Species.Dog)));
         }
 
         public IEnumerable<Pet> AllPetsButNotMice()
         {
-            return _petsInTheStore.AllThat((pet => pet.species != Species.Mouse));
+            return _petsInTheStore.AllThat(new Negation<Pet>(Pet.IsSpeciesOf(Species.Mouse)));
         }
 
         public IEnumerable<Pet> AllPetsBornAfter2010()
@@ -67,7 +67,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllDogsBornAfter2010()
         {
-            return _petsInTheStore.AllThat((pet => pet.species==Species.Dog && pet.yearOfBirth > 2010));
+            return _petsInTheStore.AllThat(new Conjunction<Pet>(Pet.IsBornAfter(2010), Pet.IsSpeciesOf(Species.Dog)));
         }
 
         public IEnumerable<Pet> AllMaleDogs()
@@ -78,6 +78,53 @@ namespace Training.DomainClasses
         public IEnumerable<Pet> AllPetsBornAfter2011OrRabbits()
         {
             return _petsInTheStore.AllThat((pet => pet.species == Species.Rabbit || pet.yearOfBirth > 2011));
+        }
+    }
+
+    public class Conjunction<TItem> : Criteria<TItem>
+    {
+	    private Criteria<TItem> criteria1;
+	    private Criteria<TItem> criteria2;
+		public Conjunction(Criteria<TItem> criteria1, Criteria<TItem> criteria2)
+		{
+			this.criteria1 = criteria1;
+            this.criteria2 = criteria2;
+		}
+
+	    public bool IsSatisfiedBy(TItem pet)
+	    {
+			return criteria1.IsSatisfiedBy(pet) && criteria2.IsSatisfiedBy(pet);
+		}
+    }
+
+    public class Alternative<TItem> : Criteria<TItem>
+    {
+	    private Criteria<TItem> criteria1;
+	    private Criteria<TItem> criteria2;
+	    public Alternative(Criteria<TItem> criteria1, Criteria<TItem> criteria2)
+	    {
+		    this.criteria1 = criteria1;
+		    this.criteria2 = criteria2;
+	    }
+
+	    public bool IsSatisfiedBy(TItem pet)
+	    {
+		    return criteria1.IsSatisfiedBy(pet) || criteria2.IsSatisfiedBy(pet);
+	    }
+    }
+
+    public class Negation<TItem> : Criteria<TItem>
+    {
+        private readonly Criteria<TItem> _criteria;
+
+        public Negation(Criteria<TItem> criteria)
+        {
+            _criteria = criteria;
+        }
+
+        public bool IsSatisfiedBy(TItem pet)
+        {
+            return !_criteria.IsSatisfiedBy(pet);
         }
     }
 }

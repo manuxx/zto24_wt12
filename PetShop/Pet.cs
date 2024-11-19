@@ -40,56 +40,65 @@ namespace Training.DomainClasses
         public float price { get; set; }
         public Species species { get; set; }
 
+        public static Criteria<Pet> IsSpeciesOf(Species species)
+        {
+            return new SpeciesCriteria(species);
+        }
+
         public static Criteria<Pet> IsFemale()
         {
-	        return new SexCriteria(Sex.Female);
+            return new SexCriteria(Sex.Female);
         }
 
         public static Criteria<Pet> IsBornAfter(int year)
         {
-	        return new YearCriteria(year);
+            return new BornAfterCriteria(year);
         }
-
-        public class YearCriteria : Criteria<Pet>
+        public class BornAfterCriteria : Criteria<Pet>
         {
-	        private int year;
-	        public YearCriteria(int year)
-	        {
-		        this.year = year;
-	        }
+            private readonly int _year;
 
-	        public bool IsSatisfiedBy(Pet pet)
-	        {
-		        return pet.yearOfBirth > year;
-	        }
+            public BornAfterCriteria(int year)
+            {
+                _year = year;
+            }
+
+            public bool IsSatisfiedBy(Pet pet)
+            {
+                return pet.yearOfBirth > _year;
+            }
         }
 
         public class SexCriteria : Criteria<Pet>
         {
-	        private Sex sex;
-	        public SexCriteria(Sex female)
-	        {
-		        this.sex = female;
-	        }
+            private readonly Sex _sex;
 
-	        public bool IsSatisfiedBy(Pet pet)
-	        {
-		        return pet.sex == sex;
-	        }
+            public SexCriteria(Sex sex)
+            {
+                _sex = sex;
+            }
+
+            public bool IsSatisfiedBy(Pet pet)
+            {
+                return pet.sex == _sex;
+            }
         }
 
         public class SpeciesCriteria : Criteria<Pet>
         {
-	        private Species species;
-	        public SpeciesCriteria(Species species)
-	        {
-		        this.species = species;
-	        }
+            private readonly Species _species;
 
-	        public bool IsSatisfiedBy(Pet pet)
-	        {
-		        return pet.species == species;
-	        }
+            public SpeciesCriteria(Species species)
+            {
+                _species = species;
+            }
+
+            public bool IsSatisfiedBy(Pet pet)
+            {
+                return pet.species == _species;
+            }
         }
-	}
+    }
+
+    
 }
