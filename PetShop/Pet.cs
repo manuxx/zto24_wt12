@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Training.DomainClasses
 {
@@ -40,19 +41,59 @@ namespace Training.DomainClasses
         public float price { get; set; }
         public Species species { get; set; }
 
-        public static Predicate<Pet> IsSpeciesOf(Species species)
+        public static Criteria<Pet> IsSpeciesOf(Species species)
         {
-            return pet => pet.species == species;
+            return new SpeciesCriteria(species);
         }
 
-        public static Predicate<Pet> IsFemale()
+        public static Criteria<Pet> IsFemale()
         {
-            return pet => pet.sex == Sex.Female;
+            return new SexCriteria();
         }
 
-        public static Predicate<Pet> IsBornAfter(int year)
+        public static Criteria<Pet> IsBornAfter(int year)
         {
-            return pet => pet.yearOfBirth>year;
+           
+           return new BornAfterCriteria(year);
+        }
+
+        public class BornAfterCriteria : Criteria<Pet>
+        {
+            private int _year;
+            public BornAfterCriteria(int year)
+            {
+                _year = year;
+            }
+
+            public bool IsSatisfiedBy(Pet pet)
+            {
+                return pet.yearOfBirth > _year;
+            }
+        }
+
+
+        public class SexCriteria : Criteria<Pet>
+        {
+            public bool IsSatisfiedBy(Pet pet)
+            {
+                return pet.sex == Sex.Female;
+            }
+        }
+
+        public class SpeciesCriteria : Criteria<Pet>
+        {
+            private Species _species;
+            public SpeciesCriteria(Species species)
+            {
+                _species = species;
+            }
+
+            public bool IsSatisfiedBy(Pet pet)
+            {
+                return pet.species == _species;
+            }
         }
     }
+
+    
 }
