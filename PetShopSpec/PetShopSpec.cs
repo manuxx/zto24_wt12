@@ -204,7 +204,8 @@ namespace Training.Specificaton
     {
         private It should_be_able_to_find_all_cats = () =>
         {
-            var foundPets = subject.AllCats();
+            Criteria<Pet> criteria = Where_Pet.HasAn(pet => pet.species).EqualTo(Species.Cat);
+            var foundPets = subject.AllPets().AllThat(criteria);
             foundPets.ShouldContainOnly(cat_Tom, cat_Jinx);
         };
         private It should_be_able_to_find_all_mice = () =>
@@ -250,6 +251,30 @@ namespace Training.Specificaton
             foundPets.ShouldContainOnly(mouse_Jerry, rabbit_Fluffy);
         };
 
+    }
+
+    internal class Where_Pet
+    {
+        public static CriteriaBuilder HasAn(Func<Pet, Species> propertySelector)
+        {
+            return new CriteriaBuilder(propertySelector);
+        }
+    }
+
+    internal class CriteriaBuilder
+    {
+        private readonly Func<Pet, Species> _propertySelector;
+
+        public CriteriaBuilder(Func<Pet, Species> propertySelector)
+        {
+            _propertySelector = propertySelector;
+            
+        }
+
+        public Criteria<Pet> EqualTo(Species species)
+        {
+            return new AnonymousCriteria<Pet>(pet => _propertySelector(pet)==species);
+        }
     }
 
 
