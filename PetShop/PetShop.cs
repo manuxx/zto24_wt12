@@ -35,14 +35,14 @@ namespace Training.DomainClasses
         public IEnumerable<Pet> AllPetsSortedByName()
         {
             var ret = new List<Pet>(_petsInTheStore);
-            ret.Sort((p1,p2) => p1.name.CompareTo(p2.name));
+            ret.Sort((p1, p2) => p1.name.CompareTo(p2.name));
             return ret;
         }
 
         public IEnumerable<Pet> AllMice()
         {
             return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Mouse));
-            
+
         }
 
         public IEnumerable<Pet> AllFemalePets()
@@ -52,7 +52,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCatsOrDogs()
         {
-            return _petsInTheStore.AllThat(new Alternative<Pet>(Pet.IsSpeciesOf(Species.Cat), Pet.IsSpeciesOf(Species.Dog)));
+            return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Cat).Or(Pet.IsSpeciesOf(Species.Dog)));
         }
 
         public IEnumerable<Pet> AllPetsButNotMice()
@@ -67,18 +67,17 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllDogsBornAfter2010()
         {
-            return _petsInTheStore.AllThat(new Conjunction<Pet>(Pet.IsSpeciesOf(Species.Dog), Pet.IsBornAfter(2010)));
+            return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Dog).And(Pet.IsBornAfter(2010)));
         }
 
         public IEnumerable<Pet> AllMaleDogs()
         {
-            return _petsInTheStore.AllThat((pet => pet.species == Species.Dog && pet.sex ==Sex.Male));
+            return _petsInTheStore.AllThat(Pet.IsMale().And(Pet.IsSpeciesOf(Species.Dog)));
         }
 
         public IEnumerable<Pet> AllPetsBornAfter2011OrRabbits()
         {
-            return _petsInTheStore.AllThat((pet => pet.species == Species.Rabbit || pet.yearOfBirth > 2011));
+            return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Rabbit).Or(Pet.IsBornAfter(2011)));
         }
-
     }
 }
