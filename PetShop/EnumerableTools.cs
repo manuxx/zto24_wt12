@@ -12,16 +12,14 @@ public static class EnumerableTools
         }
     }
 
-    public static IEnumerable<Pet> AllThat<Pet>(this IEnumerable<Pet> petsInTheStore, Predicate<Pet> condition)
+    // Wzorzec - Adapter (rózne typy, ³¹czy rózne interfejsy)
+
+    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, Criteria<TItem> criteria)
     {
-        return petsInTheStore.AllThat(new AnonymousCriteria<Pet>(condition));
-    }
-    public static IEnumerable<Pet> AllThat<Pet>(this IEnumerable<Pet> petsInTheStore, Criteria<Pet> criteria)
-    {
-        foreach (Pet pet in petsInTheStore)
+        foreach (TItem item in items)
         {
-            if (criteria.IsSatisfiedBy(pet))
-                yield return pet;
+            if (criteria.IsSatisfiedBy(item))
+                yield return item;
         }
     }
 }
