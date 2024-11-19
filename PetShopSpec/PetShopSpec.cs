@@ -16,12 +16,12 @@ namespace Training.Specificaton
             res = 2;
         };
         private Because of = () => { res += 2; };
-        private It should_be_that_two_plus_two_is_four = ()=>
+        private It should_be_that_two_plus_two_is_four = () =>
         {
-            
+
             res.ShouldEqual(4);
         };
-}
+    }
     public abstract class pet_shop_concern : Specification<PetShop>
     {
         Establish context = () =>
@@ -61,8 +61,8 @@ namespace Training.Specificaton
         static Pet pet;
     }
 
-	
-	public class when_adding_an_existing_pet_again_ : pet_shop_concern
+
+    public class when_adding_an_existing_pet_again_ : pet_shop_concern
     {
         Establish context = () =>
         {
@@ -80,7 +80,7 @@ namespace Training.Specificaton
     }
 
 
-	public class when_adding_a_new_pet_with_existing_name_ : pet_shop_concern
+    public class when_adding_a_new_pet_with_existing_name_ : pet_shop_concern
     {
         Establish context = () =>
         {
@@ -204,7 +204,8 @@ namespace Training.Specificaton
     {
         private It should_be_able_to_find_all_cats = () =>
         {
-            var foundPets = subject.AllCats();
+            Criteria<Pet> criteria = Where_Pet.HasA(pet => pet.species).EqualTo(Species.Cat);
+            var foundPets = subject.AllPets().AllThat(criteria);
             foundPets.ShouldContainOnly(cat_Tom, cat_Jinx);
         };
         private It should_be_able_to_find_all_mice = () =>
@@ -250,6 +251,29 @@ namespace Training.Specificaton
             foundPets.ShouldContainOnly(mouse_Jerry, rabbit_Fluffy);
         };
 
+    }
+
+    internal class Where_Pet
+    {
+        public static CriteriaBuilder HasA(Func<Pet, Species> propertySelector)
+        {
+            return new CriteriaBuilder(propertySelector);
+        }
+    }
+
+    internal class CriteriaBuilder
+    {
+        private readonly Func<Pet, Species> _propertySelector;
+
+        public CriteriaBuilder(Func<Pet, Species> propertySelector)
+        {
+            _propertySelector = propertySelector;
+        }
+
+        public Criteria<Pet> EqualTo(Species species)
+        {
+            return new AnonymousCriteria<Pet>(pet => _propertySelector(pet) == species);
+        }
     }
 
 
