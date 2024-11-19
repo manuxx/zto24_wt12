@@ -204,8 +204,8 @@ namespace Training.Specificaton
     {
         private It should_be_able_to_find_all_cats = () =>
         {
-            Criteria<Pet> criteria = Where<Pet>.HasAn(pet => pet.species).EqualTo(Species.Cat);
-            var foundPets = subject.AllPets().AllThat(crieria);
+            Criteria<Pet> criteria = Where_Pet.HasAn(pet => pet.species).EqualTo(Species.Cat);
+            var foundPets = subject.AllPets().AllThat(criteria);
             foundPets.ShouldContainOnly(cat_Tom, cat_Jinx);
         };
         private It should_be_able_to_find_all_mice = () =>
@@ -251,6 +251,22 @@ namespace Training.Specificaton
             foundPets.ShouldContainOnly(mouse_Jerry, rabbit_Fluffy);
         };
 
+    }
+
+    internal class Where_Pet
+    {
+        public static CriteriaBuilder HasAn(Func<Pet, Species> func)
+        {
+            return new CriteriaBuilder();
+        }
+    }
+
+    internal class CriteriaBuilder
+    {
+        public Criteria<Pet> EqualTo(Species cat)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 
