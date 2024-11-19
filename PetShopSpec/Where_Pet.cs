@@ -8,17 +8,23 @@ namespace Training.Specificaton
 {
     internal static class Where_Pet
     {
-        public static CriteriaBuilder HasAn(Func<Pet, Species> unknown)
+        public static CriteriaBuilder HasAn(Func<Pet, Species> propertySelector)
         {
-            return new CriteriaBuilder();
+            return new CriteriaBuilder(propertySelector);
         }
     }
 
     internal class CriteriaBuilder
     {
-        public Criteria<Pet> EqualTo(Species cat)
+        private Func<Pet, Species> _propertySelector;
+        public CriteriaBuilder(Func<Pet, Species> propertySelector)
         {
-            throw new NotImplementedException();
+            _propertySelector = _propertySelector;
+        }
+
+        public Criteria<Pet> EqualTo(Species species)
+        {
+            return new AnonymousCriteria<Pet>(pet => _propertySelector(pet) == species);
         }
     }
 }
