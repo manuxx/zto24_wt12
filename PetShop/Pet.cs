@@ -4,6 +4,31 @@ namespace Training.DomainClasses
 {
     public class Pet : IEquatable<Pet>
     {
+        public class BornAfterCriteria(int year) : Criteria<Pet>
+        {
+            public bool IsSatisfiedBy(Pet pet)
+            {
+                return pet.yearOfBirth > year;
+            }
+        }
+
+        public class SexCriteria(Sex sex) : Criteria<Pet>
+        {
+            public bool IsSatisfiedBy(Pet pet)
+            {
+                return pet.sex == sex;
+            }
+        }
+
+        public class SpeciesCriteria(Species species) : Criteria<Pet>
+        {
+            public bool IsSatisfiedBy(Pet pet)
+            {
+                return pet.species == species;
+            }
+        }
+
+
         public bool Equals(Pet other)
         {
             if (other is null) return false;
@@ -40,19 +65,19 @@ namespace Training.DomainClasses
         public float price { get; set; }
         public Species species { get; set; }
 
-        public static Predicate<Pet> IsSpeciesOf(Species species)
+        public static Criteria<Pet> IsSpeciesOf(Species species)
         {
-            return pet => pet.species == species;
+            return new SpeciesCriteria(species);
         }
 
-        public static Predicate<Pet> IsFemale()
+        public static Criteria<Pet> IsSexOf(Sex sex)
         {
-            return pet => pet.sex == Sex.Female;
+            return new SexCriteria(sex);
         }
 
-        public static Predicate<Pet> IsBornAfter(int year)
+        public static Criteria<Pet> IsBornAfter(int year)
         {
-            return pet => pet.yearOfBirth>year;
+            return new BornAfterCriteria(year);
         }
     }
 }
