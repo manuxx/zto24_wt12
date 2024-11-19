@@ -52,7 +52,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCatsOrDogs()
         {
-            return _petsInTheStore.AllThat(new Alternative(Pet.IsSpeciesOf(Species.Cat),Pet.IsSpeciesOf(Species.Dog)));
+            return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Cat).Or(Pet.IsSpeciesOf(Species.Dog)));
         }
 
         public IEnumerable<Pet> AllPetsButNotMice()
@@ -78,55 +78,6 @@ namespace Training.DomainClasses
         public IEnumerable<Pet> AllPetsBornAfter2011OrRabbits()
         {
             return _petsInTheStore.AllThat((pet => pet.species == Species.Rabbit || pet.yearOfBirth > 2011));
-        }
-    }
-
-    public class Conjunction<TItem> : Criteria<TItem>
-    {
-        private readonly Criteria<TItem> _criteria1;
-        private readonly Criteria<TItem> _criteria2;
-
-        public Conjunction(Criteria<TItem> criteria1, Criteria<TItem> criteria2)
-        {
-            _criteria1 = criteria1;
-            _criteria2 = criteria2;
-        }
-
-        public bool IsSatisfiedBy(TItem pet)
-        {
-            return _criteria1.IsSatisfiedBy(pet) && _criteria2.IsSatisfiedBy(pet);
-        }
-    }
-
-    public class Alternative : Criteria<Pet>
-    {
-        private readonly Criteria<Pet> _criteria1;
-        private readonly Criteria<Pet> _criteria2;
-
-        public Alternative(Criteria<Pet> criteria1, Criteria<Pet> criteria2)
-        {
-            _criteria1 = criteria1;
-            _criteria2 = criteria2;
-        }
-
-        public bool IsSatisfiedBy(Pet pet)
-        {
-            return _criteria1.IsSatisfiedBy(pet) || _criteria2.IsSatisfiedBy(pet);
-        }
-    }
-
-    public class Negation<TItem> : Criteria<TItem>
-    {
-        private readonly Criteria<TItem> _criteria;
-
-        public Negation(Criteria<TItem> criteria)
-        {
-            _criteria = criteria;
-        }
-
-        public bool IsSatisfiedBy(TItem pet)
-        {
-            return !_criteria.IsSatisfiedBy(pet);
         }
     }
 }
