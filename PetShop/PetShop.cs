@@ -29,7 +29,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCats()
         {
-            return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Cat));
+            return _petsInTheStore.AllThat(new Pet.SpeciesCriteria(Species.Cat));
         }
 
         public IEnumerable<Pet> AllPetsSortedByName()
@@ -41,7 +41,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllMice()
         {
-            return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Mouse));
+            return _petsInTheStore.AllThat(new Pet.SpeciesCriteria(Species.Mouse));
             
         }
 

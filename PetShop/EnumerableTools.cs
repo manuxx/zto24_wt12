@@ -12,16 +12,16 @@ public static class EnumerableTools
         }
     }
 
-    public static IEnumerable<Pet> AllThat<Pet>(this IEnumerable<Pet> petsInTheStore, Predicate<Pet> condition)
+    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> petsInTheStore, Predicate<TItem> condition)
     {
-        return petsInTheStore.AllThat(new AnonymousCriteria<Pet>(condition));
+        return petsInTheStore.AllThat(new AnonymousCriteria<TItem>(condition));
     }
-    public static IEnumerable<Pet> AllThat<Pet>(this IEnumerable<Pet> petsInTheStore, Criteria<Pet> criteria)
+    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> petsInTheStore, Criteria<TItem> criteria)
     {
-        foreach (Pet pet in petsInTheStore)
+        foreach (TItem item in petsInTheStore)
         {
-            if (criteria.IsSatisfiedBy(pet))
-                yield return pet;
+            if (criteria.IsSatisfiedBy(item))
+                yield return item;
         }
     }
 }
